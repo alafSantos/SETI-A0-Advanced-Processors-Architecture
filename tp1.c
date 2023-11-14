@@ -322,53 +322,34 @@ int main()
   // Commenter et décommenter les appels de fonctions suivant les questions du TP.
   printf("Evaluation : N=%d, type="STR(TYPE)"\n",N);
 
-  zero();
-
+  copy_ij();
   dt=median_res(N*N);
-  printf("zero: %lf \n",dt);
+  printf("copy_ij: %lf \n \n",dt);
   
+  copy_ji();
+  dt=median_res(N*N);
+  printf("copy_ji: %lf \n \n",dt);
 
-//   copy_ij();
-// //fin = stop_timer(); //renvoie la valeur du TSC après la fonction
-//   dt=min_res(N*N);
-//   printf("copy_ij: %lf \n",dt);
-  
-// //  debut = start_timer();// renvoie la valeur du TSC au début
-//   copy_ji();
-// //fin = stop_timer(); //renvoie la valeur du TSC après la fonction
-//   dt=min_res(N*N);
-//   printf("copy_ji: %lf \n",dt);
+  // add_ij();
+  // dt=median_res(N*N);
+  // printf("add_ij: %lf \n \n",dt);
 
-// //  debut = start_timer();// renvoie la valeur du TSC au début
-//   add_ij();
-// //fin = stop_timer(); //renvoie la valeur du TSC après la fonction
-//   dt=min_res(N*N);
-//   printf("add_ij: %lf \n",dt);
+  // add_ji();
+  // dt=median_res(N*N);
+  // printf("add_ji: %lf \n \n",dt);
 
-// //  debut = start_timer();// renvoie la valeur du TSC au début
-//   add_ji();
-// //fin = stop_timer(); //renvoie la valeur du TSC après la fonction
-//   dt=min_res(N*N);
-//   printf("add_ji: %lf \n",dt);
+  // ps();
+  // dt=median_res(N*N);
+  // printf("ps: %lf \n \n",dt);
 
-// //  debut = start_timer();// renvoie la valeur du TSC au début
-//   ps();
-// //fin = stop_timer(); //renvoie la valeur du TSC après la fonction
-//   dt=min_res(N*N);
-//   printf("ps: %lf \n",dt);
+  // mm_ijk();
+  // dt=min_res(N*N*N);
+  // printf("mm_ijk: %lf \n \n",dt);
+  // mm_ikj();
 
-// //  debut = start_timer();// renvoie la valeur du TSC au début
-//   mm_ijk();
-// //fin = stop_timer(); //renvoie la valeur du TSC après la fonction
-//   dt=min_res(N*N*N);
-//   printf("mm_ijk: %lf \n",dt);
-//   mm_ikj();
-
-// //  debut = start_timer();// renvoie la valeur du TSC au début
-//   mm_b_ijk();
-// //fin = stop_timer(); //renvoie la valeur du TSC après la fonction
-//   dt=min_res(N*N*N);
-//   printf("mm_b_ijk: %lf \n",dt);
+  // mm_b_ijk();
+  // dt=min_res(N*N*N);
+  // printf("mm_b_ijk: %lf \n \n",dt);
   
 } 
 
