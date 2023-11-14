@@ -1,6 +1,10 @@
 #include <stdio.h>
 #include <stdint.h>
 
+
+
+double dt ; // le nombre de cycles écoulés en double
+
 #ifndef N
 #define N 1000		// la taille des matrices [N][N]/vecteurs[N^2]
 #endif
@@ -278,15 +282,54 @@ int main()
 {
   // Commenter et décommenter les appels de fonctions suivant les questions du TP.
   printf("Evaluation : N=%d, type="STR(TYPE)"\n",N);
-  //zero();
-  //copy_ij();
-  //copy_ji();
-  //add_ij();
-  //add_ji();
-  //ps();
-  //mm_ijk();
-  mm_ikj();
-  //mm_b_ijk();
+  debut = start_timer();// renvoie la valeur du TSC au début
+  zero();
+  fin = stop_timer(); //renvoie la valeur du TSC après la fonction
+  dt=dtime(debut, fin); // Nombre de cycles d'horloge processeur en double
+  printf("zero: %lf \n",dt);
+  
+  // debut = start_timer();// renvoie la valeur du TSC au début
+  // copy_ij();
+  // fin = stop_timer(); //renvoie la valeur du TSC après la fonction
+  // dt=dtime(debut, fin); // Nombre de cycles d'horloge processeur en double
+  // printf("copy_ij: %lf \n",dt);
+  
+  // debut = start_timer();// renvoie la valeur du TSC au début
+  // copy_ji();
+  // fin = stop_timer(); //renvoie la valeur du TSC après la fonction
+  // dt=dtime(debut, fin); // Nombre de cycles d'horloge processeur en double
+  // printf("copy_ji: %lf \n",dt);
+
+  // debut = start_timer();// renvoie la valeur du TSC au début
+  // add_ij();
+  // fin = stop_timer(); //renvoie la valeur du TSC après la fonction
+  // dt=dtime(debut, fin); // Nombre de cycles d'horloge processeur en double
+  // printf("add_ij: %lf \n",dt);
+
+  // debut = start_timer();// renvoie la valeur du TSC au début
+  // add_ji();
+  // fin = stop_timer(); //renvoie la valeur du TSC après la fonction
+  // dt=dtime(debut, fin); // Nombre de cycles d'horloge processeur en double
+  // printf("add_ji: %lf \n",dt);
+
+  // debut = start_timer();// renvoie la valeur du TSC au début
+  // ps();
+  // fin = stop_timer(); //renvoie la valeur du TSC après la fonction
+  // dt=dtime(debut, fin); // Nombre de cycles d'horloge processeur en double
+  // printf("ps: %lf \n",dt);
+
+  // debut = start_timer();// renvoie la valeur du TSC au début
+  // mm_ijk();
+  // fin = stop_timer(); //renvoie la valeur du TSC après la fonction
+  // dt=dtime(debut, fin); // Nombre de cycles d'horloge processeur en double
+  // printf("mm_ijk: %lf \n",dt);
+  // mm_ikj();
+
+  // debut = start_timer();// renvoie la valeur du TSC au début
+  // mm_b_ijk();
+  // fin = stop_timer(); //renvoie la valeur du TSC après la fonction
+  // dt=dtime(debut, fin); // Nombre de cycles d'horloge processeur en double
+  // printf("mm_b_ijk: %lf \n",dt);
   
 } 
 
