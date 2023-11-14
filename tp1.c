@@ -2,11 +2,10 @@
 #include <stdint.h>
 
 
-
-double dt ; // le nombre de cycles écoulés en double
-
 #ifndef N
 #define N 1000		// la taille des matrices [N][N]/vecteurs[N^2]
+
+
 #endif
 #ifndef M
 #define M 16		// nombre d'itérations de chaque fonction
@@ -32,6 +31,33 @@ double dt ; // le nombre de cycles écoulés en double
 
 #define STR1(x) #x
 #define STR(x) STR1(x)
+
+double dt ; // le nombre de cycles écoulés en double
+
+// our functions
+double min_res(double nb_iter);
+double median_res(double nb_iter);
+
+// https://www.tutorialspoint.com/learn_c_by_examples/median_program_in_c.htm
+void swap(double *p,double *q) {
+   double t;
+   t=*p; 
+   *p=*q; 
+   *q=t;
+}
+
+void sort(double a[],int n) { 
+   int i,j,temp;
+   for(i = 0;i < n-1;i++) {
+      for(j = 0;j < n-i-1;j++) {
+         if(a[j] > a[j+1])
+            swap(&a[j],&a[j+1]);
+      }
+   }
+}
+
+
+
 
 // Permet de lire le compteur interne du nombre de cycles du
 // processeur (TSC timestamp counter).
@@ -71,6 +97,21 @@ void add_res(double res, int where)
   resultats[where]=res;
 }
 
+//Gives min
+double min_res(double nb_iter){
+  double normalize = 1.0/nb_iter;
+  double tmp=resultats[0]*normalize;
+  for(int i=1; i<M; i++)
+    tmp=(tmp<=resultats[i]*normalize)?tmp:resultats[i]*normalize;
+  return tmp;
+}
+
+double median_res(double nb_iter){
+  sort(resultats,M);
+  int n = (M+1) / 2 - 1;
+  return (double) resultats[n]/nb_iter;
+}
+
 // la fonction d'affichage des résutats. Peut être redéfinie en fonction des besoins
 // pour faire des statistiques, enlever les point aberrants, etc
 // Le deuxième paramètre est le nombre d'itérations pour normaliser
@@ -94,9 +135,8 @@ void zero(){
   for (m=0;m<M;m++)
     {
       debut=start_timer();
-
       for (i=0;i<(N*N);i++)
-	BF[i]=ZERO;
+	      BF[i]=ZERO;
       benchtime=dtime(debut, stop_timer());
       add_res(benchtime,m);
     }
@@ -255,18 +295,17 @@ void mm_b_ijk(){
   for (m=0;m<M;m++)
     {
       debut=start_timer();
-
       for (jj=0;jj<N;jj+=BL)
-	for (kk=0;kk<N;kk+=BL)
-	  for (i=0;i<N;i++)
-	    {
-	      for (j=jj;j<min(jj+BL-1,N);j++)
-		{
-		  SF=ZERO;
-		  for (k=kk;k<min(kk+BL-1,N);k++)
-		    SF += AF[i][k]*XF[k][j];
-		  YF[i][j]=SF;
-		}
+	      for (kk=0;kk<N;kk+=BL)
+	        for (i=0;i<N;i++)
+	        {
+	          for (j=jj;j<min(jj+BL-1,N);j++)
+            {
+              SF=ZERO;
+              for (k=kk;k<min(kk+BL-1,N);k++)
+                SF += AF[i][k]*XF[k][j];
+              YF[i][j]=SF;
+            }
 	    }
 
       benchtime=dtime(debut, stop_timer());
@@ -282,54 +321,54 @@ int main()
 {
   // Commenter et décommenter les appels de fonctions suivant les questions du TP.
   printf("Evaluation : N=%d, type="STR(TYPE)"\n",N);
-  debut = start_timer();// renvoie la valeur du TSC au début
+
   zero();
-  fin = stop_timer(); //renvoie la valeur du TSC après la fonction
-  dt=dtime(debut, fin); // Nombre de cycles d'horloge processeur en double
+
+  dt=median_res(N*N);
   printf("zero: %lf \n",dt);
   
-  // debut = start_timer();// renvoie la valeur du TSC au début
-  // copy_ij();
-  // fin = stop_timer(); //renvoie la valeur du TSC après la fonction
-  // dt=dtime(debut, fin); // Nombre de cycles d'horloge processeur en double
-  // printf("copy_ij: %lf \n",dt);
+
+//   copy_ij();
+// //fin = stop_timer(); //renvoie la valeur du TSC après la fonction
+//   dt=min_res(N*N);
+//   printf("copy_ij: %lf \n",dt);
   
-  // debut = start_timer();// renvoie la valeur du TSC au début
-  // copy_ji();
-  // fin = stop_timer(); //renvoie la valeur du TSC après la fonction
-  // dt=dtime(debut, fin); // Nombre de cycles d'horloge processeur en double
-  // printf("copy_ji: %lf \n",dt);
+// //  debut = start_timer();// renvoie la valeur du TSC au début
+//   copy_ji();
+// //fin = stop_timer(); //renvoie la valeur du TSC après la fonction
+//   dt=min_res(N*N);
+//   printf("copy_ji: %lf \n",dt);
 
-  // debut = start_timer();// renvoie la valeur du TSC au début
-  // add_ij();
-  // fin = stop_timer(); //renvoie la valeur du TSC après la fonction
-  // dt=dtime(debut, fin); // Nombre de cycles d'horloge processeur en double
-  // printf("add_ij: %lf \n",dt);
+// //  debut = start_timer();// renvoie la valeur du TSC au début
+//   add_ij();
+// //fin = stop_timer(); //renvoie la valeur du TSC après la fonction
+//   dt=min_res(N*N);
+//   printf("add_ij: %lf \n",dt);
 
-  // debut = start_timer();// renvoie la valeur du TSC au début
-  // add_ji();
-  // fin = stop_timer(); //renvoie la valeur du TSC après la fonction
-  // dt=dtime(debut, fin); // Nombre de cycles d'horloge processeur en double
-  // printf("add_ji: %lf \n",dt);
+// //  debut = start_timer();// renvoie la valeur du TSC au début
+//   add_ji();
+// //fin = stop_timer(); //renvoie la valeur du TSC après la fonction
+//   dt=min_res(N*N);
+//   printf("add_ji: %lf \n",dt);
 
-  // debut = start_timer();// renvoie la valeur du TSC au début
-  // ps();
-  // fin = stop_timer(); //renvoie la valeur du TSC après la fonction
-  // dt=dtime(debut, fin); // Nombre de cycles d'horloge processeur en double
-  // printf("ps: %lf \n",dt);
+// //  debut = start_timer();// renvoie la valeur du TSC au début
+//   ps();
+// //fin = stop_timer(); //renvoie la valeur du TSC après la fonction
+//   dt=min_res(N*N);
+//   printf("ps: %lf \n",dt);
 
-  // debut = start_timer();// renvoie la valeur du TSC au début
-  // mm_ijk();
-  // fin = stop_timer(); //renvoie la valeur du TSC après la fonction
-  // dt=dtime(debut, fin); // Nombre de cycles d'horloge processeur en double
-  // printf("mm_ijk: %lf \n",dt);
-  // mm_ikj();
+// //  debut = start_timer();// renvoie la valeur du TSC au début
+//   mm_ijk();
+// //fin = stop_timer(); //renvoie la valeur du TSC après la fonction
+//   dt=min_res(N*N*N);
+//   printf("mm_ijk: %lf \n",dt);
+//   mm_ikj();
 
-  // debut = start_timer();// renvoie la valeur du TSC au début
-  // mm_b_ijk();
-  // fin = stop_timer(); //renvoie la valeur du TSC après la fonction
-  // dt=dtime(debut, fin); // Nombre de cycles d'horloge processeur en double
-  // printf("mm_b_ijk: %lf \n",dt);
+// //  debut = start_timer();// renvoie la valeur du TSC au début
+//   mm_b_ijk();
+// //fin = stop_timer(); //renvoie la valeur du TSC après la fonction
+//   dt=min_res(N*N*N);
+//   printf("mm_b_ijk: %lf \n",dt);
   
 } 
 
