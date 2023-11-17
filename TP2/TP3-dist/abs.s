@@ -12,6 +12,7 @@ main:
 	c.lt.d 7, f2, f0	; B1 < 0 ?
 	bc1f 7, done		; if false, nothing to do
 	sub.d f4, f0, f2	; f4=-A=|A|= 0.0 - f4
-done:	s.d f4,B1(r0)
+done:	
+	s.d f4,B1(r0)
 	halt          
  
