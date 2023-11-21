@@ -5,7 +5,7 @@ This repository aims to show a little of the work developed as part of the **pro
 
 ## Meta
  * **Master in Electrical Engineering - Institut Polytechnique de Paris**
- * **Course:** SE202 Rust
+ * **Course:** A0 Architecture des processeurs
  * **Author(s):**
     - Agustin COUTINHO
     - Alaf DO NASCIMENTO SANTOS
