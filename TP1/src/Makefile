@@ -19,7 +19,7 @@ o3:
 	$(CC) -O3 $(CFILES) -o $(EXE)
 
 run:
-	./$(EXE)
+	taskset -c 1 ./$(EXE)
 
 clean:
 	rm -rf $(EXE)
