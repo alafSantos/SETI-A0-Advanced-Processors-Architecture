@@ -323,12 +323,12 @@ int main()
   printf("Evaluation : N=%d, type="STR(TYPE)"\n",N);
 
   copy_ij();
-  dt=median_res(N*N);
-  printf("copy_ij: %lf \n \n",dt);
+  // dt=median_res(N*N);
+  // printf("copy_ij: %lf \n \n",dt);
   
   copy_ji();
-  dt=median_res(N*N);
-  printf("copy_ji: %lf \n \n",dt);
+  // dt=median_res(N*N);
+  // printf("copy_ji: %lf \n \n",dt);
 
   // add_ij();
   // dt=median_res(N*N);
@@ -342,14 +342,30 @@ int main()
   // dt=median_res(N*N);
   // printf("ps: %lf \n \n",dt);
 
-  // mm_ijk();
+  mm_ijk();
   // dt=min_res(N*N*N);
   // printf("mm_ijk: %lf \n \n",dt);
-  // mm_ikj();
 
-  // mm_b_ijk();
+  mm_ikj();
+  // dt=min_res(N*N*N);
+  // printf("mm_ijk: %lf \n \n",dt);
+
+  mm_b_ijk();
   // dt=min_res(N*N*N);
   // printf("mm_b_ijk: %lf \n \n",dt);
-  
+
+    // Commenter et décommenter les appels de fonctions suivant les questions du TP.
+  // printf("Evaluation : N=%d, type="STR(TYPE)"\n",N);
+  //zero();
+  //copy_ij();
+  //copy_ji();
+  //add_ij();
+  //add_ji();
+  //ps();
+  //mm_ijk();
+  // mm_ikj();
+  //mm_b_ijk();
+
+  return 0;
 } 
 
