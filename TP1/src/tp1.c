@@ -253,7 +253,7 @@ void ps_opt()
 
     SF = ZERO;
     TYPE aux1 = 0, aux2 = 0, aux3 = 0, aux4 = 0;
-    for (i = 0; i < (int)((N * N) / 3); i+=4)
+    for (i = 0; i < (int)((N * N) / 3); i += 4)
     {
       aux1 = BF[i] * CF[i];
       aux2 = BF[i + 1] * CF[i + 1];
@@ -262,7 +262,7 @@ void ps_opt()
 
       SF += aux1 + aux2 + aux3 + aux4;
     }
-    for (i = (int)((N * N) / 3); i < (int)(2*(N * N) / 3); i+=4)
+    for (i = (int)((N * N) / 3); i < (int)(2 * (N * N) / 3); i += 4)
     {
       aux1 = BF[i] * CF[i];
       aux2 = BF[i + 1] * CF[i + 1];
@@ -271,7 +271,7 @@ void ps_opt()
 
       SF += aux1 + aux2 + aux3 + aux4;
     }
-    for (i = (int)(2*(N * N) / 3); i < (N * N) - 4; i+=4)
+    for (i = (int)(2 * (N * N) / 3); i < (N * N) - 4; i += 4)
     {
       aux1 = BF[i] * CF[i];
       aux2 = BF[i + 1] * CF[i + 1];
@@ -393,6 +393,67 @@ void mm_trans_ijk()
   separateur();
 }
 
+// latence
+void add_latence()
+{
+  int i, m;
+  TYPE a = 1, b = 1, c = 0;
+  for (m = 0; m < M; m++)
+  {
+    debut = start_timer();
+
+    for (i = 0; i < N; i++)
+    {
+      c = a + b;
+    }
+
+    benchtime = dtime(debut, stop_timer());
+    add_res(benchtime, m);
+  }
+  print_res("LATENCE", ((double)N));
+  separateur();
+}
+
+void mul_latence()
+{
+  int i, m;
+  TYPE a = 1, b = 1;
+  for (m = 0; m < M; m++)
+  {
+    debut = start_timer();
+
+    for (i = 0; i < N; i++)
+    {
+      TYPE c = a * b;
+    }
+
+    benchtime = dtime(debut, stop_timer());
+    add_res(benchtime, m);
+  }
+  print_res("LATENCE", ((double)N));
+  separateur();
+}
+
+void div_latence()
+{
+  int i, m;
+  TYPE a = 1, b = 1;
+  for (m = 0; m < M; m++)
+  {
+    debut = start_timer();
+
+    for (i = 0; i < N; i++)
+    {
+      TYPE c = a / b;
+    }
+
+    benchtime = dtime(debut, stop_timer());
+    add_res(benchtime, m);
+  }
+  print_res("LATENCE", ((double)N));
+  separateur();
+}
+
 int main()
 {
   // Commenter et décommenter les appels de fonctions suivant les questions du TP.
@@ -433,13 +494,21 @@ int main()
   // Commenter et décommenter les appels de fonctions suivant les questions du TP.
   // printf("Evaluation : N=%d, type="STR(TYPE)"\n",N);
 
-  // mm_b_ijk();
-  // dt = median_res(N * N * N);
-  // printf("mm_b_ijk: %lf \n \n", dt);
+  add_latence();
+  dt = median_res(N);
+  printf("add latence: %lf \n \n", dt);
 
-  ps_opt();
-  dt = median_res(N * N);
-  printf("ps_opt: %lf \n \n", dt);
+  mul_latence();
+  dt = median_res(N);
+  printf("mul latence: %lf \n \n", dt);
+
+  div_latence();
+  dt = median_res(N);
+  printf("div latence: %lf \n \n", dt);
+
+  // ps();
+  // dt = median_res(N * N);
+  // printf("ps: %lf \n \n", dt);
 
   // copy_ij();
   // copy_ji();
