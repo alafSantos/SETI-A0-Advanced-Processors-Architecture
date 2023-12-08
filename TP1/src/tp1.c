@@ -242,6 +242,52 @@ void ps()
   separateur();
 }
 
+// Produit scalaire 2.0
+void ps_opt()
+{
+  int i, j, k, m;
+
+  for (m = 0; m < M; m++)
+  {
+    debut = start_timer();
+
+    SF = ZERO;
+    TYPE aux1 = 0, aux2 = 0, aux3 = 0, aux4 = 0;
+    for (i = 0; i < (int)((N * N) / 3); i+=4)
+    {
+      aux1 = BF[i] * CF[i];
+      aux2 = BF[i + 1] * CF[i + 1];
+      aux3 = BF[i + 2] * CF[i + 2];
+      aux4 = BF[i + 3] * CF[i + 3];
+
+      SF += aux1 + aux2 + aux3 + aux4;
+    }
+    for (i = (int)((N * N) / 3); i < (int)(2*(N * N) / 3); i+=4)
+    {
+      aux1 = BF[i] * CF[i];
+      aux2 = BF[i + 1] * CF[i + 1];
+      aux3 = BF[i + 2] * CF[i + 2];
+      aux4 = BF[i + 3] * CF[i + 3];
+
+      SF += aux1 + aux2 + aux3 + aux4;
+    }
+    for (i = (int)(2*(N * N) / 3); i < (N * N) - 4; i+=4)
+    {
+      aux1 = BF[i] * CF[i];
+      aux2 = BF[i + 1] * CF[i + 1];
+      aux3 = BF[i + 2] * CF[i + 2];
+      aux4 = BF[i + 3] * CF[i + 3];
+
+      SF += aux1 + aux2 + aux3 + aux4;
+    }
+
+    benchtime = dtime(debut, stop_timer());
+    add_res(benchtime, m);
+  }
+  print_res("PS", (double)(N * N));
+  separateur();
+}
+
 // Multiplication de matrices ijk
 void mm_ijk()
 {
@@ -320,7 +366,7 @@ void mm_b_ijk()
 void mm_trans_ijk()
 {
   int i, j, k, m;
-  float XT[N][N];
+  TYPE XT[N][N];
 
   // Transposer la matrice
   for (i = 0; i < N; i++)
@@ -336,7 +382,7 @@ void mm_trans_ijk()
       {
         SF = ZERO;
         for (k = 0; k < N; k++)
-          SF += AF[i][k] * XT[j][k];  // Utiliser la matrice transposée
+          SF += AF[i][k] * XT[j][k]; // Utiliser la matrice transposée
         YF[i][j] = SF;
       }
 
@@ -387,14 +433,13 @@ int main()
   // Commenter et décommenter les appels de fonctions suivant les questions du TP.
   // printf("Evaluation : N=%d, type="STR(TYPE)"\n",N);
 
-
   // mm_b_ijk();
   // dt = median_res(N * N * N);
   // printf("mm_b_ijk: %lf \n \n", dt);
 
-  mm_trans_ijk();
-  dt = median_res(N * N * N);
-  printf("mm_b_ijk: %lf \n \n", dt);
+  ps_opt();
+  dt = median_res(N * N);
+  printf("ps_opt: %lf \n \n", dt);
 
   // copy_ij();
   // copy_ji();

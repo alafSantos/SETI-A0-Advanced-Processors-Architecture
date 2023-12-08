@@ -1,7 +1,7 @@
 CC = gcc
 EXE = tp1
 CFILES = tp1.c
-CFLAGS = -DN=500 -DTYPE=float -O2
+CFLAGS = -DN=1000 -DTYPE=float -O2
 
 all:
 	$(CC) $(CFILES) $(CFLAGS) -o $(EXE)
